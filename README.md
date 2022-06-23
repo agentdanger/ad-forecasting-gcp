@@ -1,2 +1,2 @@
-# ad-forecasting-gcp
-The repo will contain source code for a Google Cloud Platform application that will predict revenue performance based on planned advertising budgets.
+# ad-forecasting-aws
+The repo will contain source code for a Amazon Web Services application that will predict revenue performance based on planned advertising budgets.
