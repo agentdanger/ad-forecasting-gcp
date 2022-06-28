@@ -16,7 +16,7 @@ jobs:
     working_directory: ~/ad-forecasting-aws
     
     steps:
-      - checkout
+      - checkout 
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}
