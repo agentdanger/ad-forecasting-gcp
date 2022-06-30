@@ -1,4 +1,5 @@
 pytest
+Cython
 pytest-cov
 pylint
 scikit-learn
