@@ -1,0 +1,9 @@
+pytest
+Cython
+pytest-cov
+pylint
+scikit-learn
+pandas
+numpy
+Flask
+Flask-RESTful
