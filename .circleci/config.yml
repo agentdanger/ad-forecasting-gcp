@@ -25,9 +25,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            apt install -y python3.10-pip
-            pip install -r requirements.txt
-            python -m venv venv
+            apt install -y python3-pip
+            pip3 install -r requirements.txt
+            python3 -m venv venv
             . venv/bin/activate
       - save_cache:
           paths:
