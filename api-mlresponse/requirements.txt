@@ -7,3 +7,4 @@ pandas
 numpy
 Flask
 Flask-RESTful
+gunicorn
