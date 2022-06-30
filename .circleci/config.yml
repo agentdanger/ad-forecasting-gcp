@@ -54,6 +54,9 @@ jobs:
       - run:
           name: deploy to app engine
           command: |
+            echo ${GCLOUD_SERVICE_KEY} > /tmp/sa_key.json \
+            gcloud auth activate-service-account --key-file=/tmp/sa_key.json 
+            rm /tmp/sa_key.json
             gcloud config set project ad-forecasting-nu
             gcloud config set compute/zone us-central
             cd api-mlresponse && gcloud app deploy
