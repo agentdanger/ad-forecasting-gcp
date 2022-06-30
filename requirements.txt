@@ -5,3 +5,5 @@ scikit-learn
 numpy
 jupyter
 pandas
+Flask
+Flask-RESTful
