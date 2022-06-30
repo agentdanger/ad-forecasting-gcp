@@ -50,6 +50,16 @@ jobs:
             . venv/bin/activate
             make lint
 
+      # deplot to GCP!
+      - run:
+          name: deploy to app engine
+          command: |
+            gcloud config set project ad-forecasting-nu
+            gcloud config set compute/zone us-central
+            cd api-mlresponse && gcloud app deploy
+
+
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
