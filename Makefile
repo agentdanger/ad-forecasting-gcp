@@ -8,6 +8,9 @@ test:
 	python -m pytest -vv --cov=myrepolib tests/
 
 lint:
-	pylint --disable=R,C myrepolib
+	pylint --disable=R,C myrepolib  
 
-all: install lint test
+lint2:
+	pylint --disable=R,C tests
+
+all: install lint lint2 test
