@@ -3,8 +3,6 @@ Cython
 pytest-cov
 pylint
 scikit-learn
-numpy
-jupyter
 pandas
 Flask
 Flask-RESTful
