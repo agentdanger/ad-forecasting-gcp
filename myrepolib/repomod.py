@@ -1,2 +1,2 @@
 def myfunc():
-    return 1
+    return 1 
