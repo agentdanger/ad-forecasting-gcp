@@ -50,7 +50,7 @@ jobs:
             . venv/bin/activate
             make lint
 
-      # deplot to GCP!
+      # deploy to GCP!
       - run:
           name: deploy to app engine
           command: |
