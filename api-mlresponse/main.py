@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from google.cloud import bigquery, storage
+from typing import Union
+import logging
   
 app = Flask(__name__)
 
@@ -96,7 +98,6 @@ def file_uploaded() -> str:
         content_type=uploaded_file.content_type
     )
 
-    
     return blob.path
 
 
