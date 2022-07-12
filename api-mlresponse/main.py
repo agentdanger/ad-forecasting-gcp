@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from google.cloud import bigquery
   
 app = Flask(__name__)
@@ -64,7 +64,12 @@ job_dev.result()  # Waits for the query to finish.
 
 job_prod = client.query(sql_prod)  # API request.
 job_prod.result()  # Waits for the query to finish.
-  
+
+
+@app.route('/upload')
+def index():
+     # Set The upload HTML template '\templates\index.html'
+    return render_template('index.html')
   
 @app.route('/', methods=['GET'])
 def helloworld():
