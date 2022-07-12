@@ -8,3 +8,4 @@ numpy
 Flask
 Flask-RESTful
 gunicorn
+google-cloud-bigquery

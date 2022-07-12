@@ -1,6 +1,45 @@
 from flask import Flask, jsonify, request
+from google.cloud import bigquery
   
 app = Flask(__name__)
+
+# Construct a BigQuery client object.
+client = bigquery.Client()
+
+# TODO(developer): Set table_id to the ID of the table to create.
+table_id = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
+
+sql = """
+CREATE TABLE `{0}` IF NOT EXISTS 
+OPTIONS(
+    friendly_name="t_ad_forecasting_data_dev",
+    description="a view that expires in 2 days",
+    labels=[("org_unit", "development")]
+) 
+(
+    date date,
+    clientid integer,
+    clientname string,
+    mediatype string,
+    funnel string,
+    seasongroup string,
+    spend numeric,
+    total_revenue numeric,
+    site_visits integer,
+    video_completions integer,
+    video_views integer,
+    impressions integer,
+    post_engagement integer,
+    purchases integer,
+    clicks integer,
+    video_50_watched integer,
+)
+""".format(
+    table_id
+)
+
+job = client.query(sql)  # API request.
+job.result()  # Waits for the query to finish.
   
   
 @app.route('/', methods=['GET'])
