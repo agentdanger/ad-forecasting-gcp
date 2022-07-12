@@ -10,12 +10,7 @@ client = bigquery.Client()
 table_id = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
 
 sql = """
-CREATE TABLE IF NOT EXISTS `{0}`  
-OPTIONS(
-    friendly_name="t_ad_forecasting_data_dev",
-    description="the dev environment table",
-    labels=[("nu-application", "gcp-adforecasting", "development")]
-) 
+CREATE TABLE IF NOT EXISTS `{0}` 
 (
     date date,
     clientid integer,
@@ -33,7 +28,7 @@ OPTIONS(
     purchases integer,
     clicks integer,
     video_50_watched integer,
-)
+);
 """.format(
     table_id
 )
