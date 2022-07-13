@@ -14,7 +14,7 @@ table_id_dev = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
 table_id_prod = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_prod"
 
 # Configure this environment variable via app.yaml
-CLOUD_STORAGE_BUCKET = "gs://ad-forecasting-nu-central"
+CLOUD_STORAGE_BUCKET = "ad-forecasting-nu-central"
 
 sql_dev = """
 CREATE TABLE IF NOT EXISTS `{0}` 
