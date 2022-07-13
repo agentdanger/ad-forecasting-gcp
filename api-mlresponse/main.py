@@ -19,7 +19,7 @@ CLOUD_STORAGE_BUCKET = "ad-forecasting-nu-central"
 sql_dev = """
 CREATE TABLE IF NOT EXISTS `{0}` 
 (
-    date date,
+    date string,
     clientid integer,
     clientname string,
     mediatype string,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `{0}`
 sql_prod = """
 CREATE TABLE IF NOT EXISTS `{0}` 
 (
-    date date,
+    date string,
     clientid integer,
     clientname string,
     mediatype string,
@@ -123,7 +123,7 @@ def update_data():
 
     job_config = bigquery.LoadJobConfig(
         schema=[
-            bigquery.SchemaField("date", "date"),
+            bigquery.SchemaField("date", "string"),
             bigquery.SchemaField("clientid", "integer"),
             bigquery.SchemaField("clientname", "string"),
             bigquery.SchemaField("mediatype", "string"),
