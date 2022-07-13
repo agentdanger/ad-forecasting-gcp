@@ -114,6 +114,45 @@ def helloworld():
     if(request.method == 'GET'):
         data = {"data": "Hello World"}
         return jsonify(data)  
+
+@app.route('/tasks/update_data', methods=['GET'])
+def update_data():    
+    client = bigquery.Client()
+
+    table_id_dev = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
+
+    job_config = bigquery.LoadJobConfig(
+        schema=[
+            bigquery.SchemaField("date", "date"),
+            bigquery.SchemaField("clientid", "integer"),
+            bigquery.SchemaField("clientname", "string"),
+            bigquery.SchemaField("mediatype", "string"),
+            bigquery.SchemaField("funnel", "string"),
+            bigquery.SchemaField("seasongroup", "string"),
+            bigquery.SchemaField("spend", "numeric"),
+            bigquery.SchemaField("total_revenue", "numeric"),
+            bigquery.SchemaField("site_visits", "integer"),
+            bigquery.SchemaField("video_completions", "integer"),
+            bigquery.SchemaField("video_views", "integer"),
+            bigquery.SchemaField("impressions", "integer"),
+            bigquery.SchemaField("post_engagement", "integer"),
+            bigquery.SchemaField("purchases", "integer"),
+            bigquery.SchemaField("clicks", "integer"),
+            bigquery.SchemaField("video_50_watched", "integer")
+        ],
+        skip_leading_rows=1,
+        # The source format defaults to CSV, so the line below is optional.
+        source_format=bigquery.SourceFormat.CSV,
+        write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
+    )
+    uri = "gs://ad-forecasting-nu.appspot.com/raw_marketing_data.csv"
+
+    load_job = client.load_table_from_uri(
+        uri, table_id, job_config=job_config
+    )  # Make an API request.
+
+    load_job.result()  # Waits for the job to complete.
+
   
 if __name__=='__main__':
 	app.run(host="localhost", port=8080, debug=True)
