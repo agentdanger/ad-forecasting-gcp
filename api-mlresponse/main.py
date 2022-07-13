@@ -148,7 +148,7 @@ def update_data():
     uri = "gs://ad-forecasting-nu.appspot.com/raw_marketing_data.csv"
 
     load_job = client.load_table_from_uri(
-        uri, table_id, job_config=job_config
+        uri, table_id_dev, job_config=job_config
     )  # Make an API request.
 
     load_job.result()  # Waits for the job to complete.
