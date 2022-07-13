@@ -153,7 +153,7 @@ def update_data():
 
     load_job.result()  # Waits for the job to complete.
 
-    return True
+    return "Success"
 
   
 if __name__=='__main__':
