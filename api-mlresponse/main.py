@@ -153,6 +153,8 @@ def update_data():
 
     load_job.result()  # Waits for the job to complete.
 
+    return True
+
   
 if __name__=='__main__':
 	app.run(host="localhost", port=8080, debug=True)
