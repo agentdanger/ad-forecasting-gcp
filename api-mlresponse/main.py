@@ -112,12 +112,44 @@ def server_error(e: Union[Exception, int]) -> str:
 @app.route('/', methods=['GET'])
 def helloworld():
     if(request.method == 'GET'):
-        key = request.args.get('key')
-        data = {
-            "data": "Hello World",
-            "key": "{0}".format(key)
-        }
-        return jsonify(data)  
+        q_date = request.args.get('date')
+        q_client = request.args.get('client')
+        q_sg = request.args.get('seasongroup')
+        q_funnel = request.args.get('funnel')
+        q_mt = request.args.get('mediatype')
+        q_spend = request.args.get('spend')
+        q_sv = request.args.get('site_visits')
+        q_imp = request.args.get('impressions')
+
+        sql_dev = """
+        SELECT * FROM ML.PREDICT(MODEL `ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
+        (SELECT 
+          CAST("{0}" AS date) AS date,
+          {1} AS client,
+          {2} AS seasongroup,
+          {3} AS funnel,
+          {4} AS mediatype, 
+          {5} AS spend,
+          {6} AS site_visits,
+          {7} AS impressions
+        )
+        );
+        """.format(
+            q_date,
+            q_client,
+            q_sg,
+            q_funnel,
+            q_mt,
+            q_spend,
+            q_sv,
+            q_imp
+        )
+
+
+        predict_dev = client.query(sql_dev)  # API request.
+        data = predict_dev.result()  # Waits for the query to finish.
+        
+        return data
 
 @app.route('/tasks/update_data', methods=['GET'])
 def update_data():    
