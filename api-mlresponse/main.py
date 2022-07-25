@@ -112,7 +112,11 @@ def server_error(e: Union[Exception, int]) -> str:
 @app.route('/', methods=['GET'])
 def helloworld():
     if(request.method == 'GET'):
-        data = {"data": "Hello World"}
+        key = request.args.get('key')
+        data = {
+            "data": "Hello World",
+            "key": "{0}".format(key)
+        }
         return jsonify(data)  
 
 @app.route('/tasks/update_data', methods=['GET'])
