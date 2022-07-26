@@ -147,8 +147,8 @@ def helloworld():
 
 
         predict_dev = client.query(sql_dev)  # API request.
-        data = predict_dev.result()  # Waits for the query to finish.
-        
+        predict_df = predict_dev.result().to_dataframe  # Waits for the query to finish.
+        data = predict_df.to_json
         return data
 
 @app.route('/tasks/update_data', methods=['GET'])
