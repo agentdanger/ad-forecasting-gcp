@@ -10,3 +10,4 @@ Flask-RESTful
 gunicorn
 google-cloud-bigquery
 google-cloud-storage
+db-dtypes

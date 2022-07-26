@@ -9,3 +9,4 @@ Flask
 Flask-RESTful
 google-cloud-bigquery
 google-cloud-storage
+db-dtypes
