@@ -69,4 +69,4 @@ workflows:
       - build:
         filters:
           branches:
-            only: dev-1 
+            only: dev
