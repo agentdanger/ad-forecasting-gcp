@@ -105,13 +105,17 @@ jobs:
             make lint
 
       # deploy to GCP!
-      - run:
-          name: deploy to app engine
-          command: |
-            echo $GCLOUD_SERVICE_KEY_PROD | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID_PROD}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            cd api-mlresponse && gcloud app deploy cron.yaml && gcloud app deploy
+      - when:
+        condition:
+          equal: [ main, << pipeline.git.branch >> ]
+        steps:
+          - run:
+            name: deploy to app engine
+            command: |
+              echo $GCLOUD_SERVICE_KEY_PROD | gcloud auth activate-service-account --key-file=-
+              gcloud --quiet config set project ${GOOGLE_PROJECT_ID_PROD}
+              gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+              cd api-mlresponse && gcloud app deploy cron.yaml && gcloud app deploy
 
 
 # Invoke jobs via workflows
