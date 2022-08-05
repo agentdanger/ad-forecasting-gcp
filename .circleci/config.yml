@@ -67,6 +67,6 @@ workflows:
   toy-build-workflow:
     jobs:
       - build:
-        filters:
-          branches:
-            only: dev
+          filters:
+            branches:
+              only: dev
