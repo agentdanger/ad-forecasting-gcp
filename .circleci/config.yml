@@ -105,7 +105,7 @@ jobs:
             make lint
 
       # deplot to GCP!
-      - run:
+      - run: 
           name: deploy to app engine
           command: |
             echo $GCLOUD_SERVICE_KEY_PROD | gcloud auth activate-service-account --key-file=-
