@@ -120,10 +120,7 @@ jobs:
 workflows:
   toy-build-workflow:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: dev-1
+      - build
       - build_prod:
           filters:
             branches:
