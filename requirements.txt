@@ -1,7 +1,12 @@
 pytest
+Cython
 pytest-cov
 pylint
 scikit-learn
-numpy
-jupyter
 pandas
+numpy
+Flask
+Flask-RESTful
+google-cloud-bigquery
+google-cloud-storage
+db-dtypes

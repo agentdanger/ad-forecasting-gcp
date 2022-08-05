@@ -9,7 +9,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: circleci/python:3.10
+      - image: google/cloud-sdk
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     
@@ -25,9 +25,11 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            apt install -y python3-venv
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
+            python3 -m pip install --upgrade pip
+            pip3 install -r requirements.txt
       - save_cache:
           paths:
             - ./venv
@@ -48,9 +50,78 @@ jobs:
             . venv/bin/activate
             make lint
 
+      # deplot to GCP!
+      - run:
+          name: deploy to app engine
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            cd api-mlresponse && gcloud app deploy
+
+  build_prod:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: google/cloud-sdk
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    
+    working_directory: ~/ad-forecasting-gcp
+    
+    steps:
+      - checkout 
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            apt install -y python3-venv
+            python3 -m venv venv
+            . venv/bin/activate
+            python3 -m pip install --upgrade pip
+            pip3 install -r requirements.txt
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            make test
+      # run lints!
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+            make lint
+
+      # deplot to GCP!
+      - run:
+          name: deploy to app engine
+          command: |
+            echo $GCLOUD_SERVICE_KEY_PROD | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID_PROD}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            cd api-mlresponse && gcloud app deploy
+
+
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   toy-build-workflow:
     jobs:
-      - build 
+      - build
+      - build_prod:
+          filters:
+            branches:
+              only: main
