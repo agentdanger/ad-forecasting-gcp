@@ -122,10 +122,8 @@ workflows:
       - build: 
         filters:
           branches:
-            only:
-              - dev-1
+            only: dev-1
       - build_prod:
         filters:
           branches:
-            only:
-              - main
+            only: main
