@@ -119,12 +119,12 @@ jobs:
 workflows:
   toy-build-workflow:
     jobs:
-      - build 
+      - build: 
         filters:
           branches:
             only:
               - dev-1
-      - build_prod
+      - build_prod:
         filters:
           branches:
             only:
