@@ -116,7 +116,7 @@ def helloworld():
         q_imp = request.args.get('impressions')
 
         sql_pred = """
-        SELECT * FROM ML.PREDICT(MODEL {0}, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
+        SELECT * FROM ML.PREDICT(MODEL `{0}`, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
         (SELECT 
           CAST("{1}" AS date) AS date,
           {2} AS client,
