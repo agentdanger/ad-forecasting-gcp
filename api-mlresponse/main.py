@@ -104,16 +104,17 @@ def file_uploaded() -> str:
 
     return blob.path
 
-# @app.route('/openFile')
-# def openFile():
-#     client = storage.Client()
-#     try:
-#         bucket = client.get_bucket({0}).format(CLOUD_STORAGE_BUCKET_PROD)
-#     except:
-#         bucket = client.get_bucket({0}).format(CLOUD_STORAGE_BUCKET_DEV)
-#     blob = bucket.get_blob('data/movie_lines.txt')
-#     your_file_contents = blob.download_as_string()
-#     return your_file_contents
+ @app.route('/openFile')
+ def openFile():
+     gcs = storage.Client()
+     try:
+         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
+     except:
+         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
+     blob = bucket.get_blob('environment_variables.json')
+
+     data = json.load(f)
+     return data
 
 
 @app.errorhandler(500)
