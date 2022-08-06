@@ -109,6 +109,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+environment_variables.json
+environment_variables_prod.json
+example_json.ipynb
 
 # Spyder project settings
 .spyderproject
