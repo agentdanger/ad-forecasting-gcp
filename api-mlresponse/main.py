@@ -24,7 +24,7 @@ def openFile():
         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
     blob = bucket.get_blob('environment_variables.json')
 
-    data = json.load(f)
+    data = json.loads(blob.download_as_string())
     return data
 
 env_variables = openFile()
