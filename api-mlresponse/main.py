@@ -5,19 +5,36 @@ import logging
   
 app = Flask(__name__)
 
+
+
 # Construct a BigQuery client object.
 client = bigquery.Client()
-
-# TODO(developer): Set table_id to the ID of the table to create.
-table_id_dev = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
-
-table_id_prod = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_prod"
 
 # Configure this environment variable via app.yaml
 CLOUD_STORAGE_BUCKET_DEV = "ad-forecasting-nu-central" 
 CLOUD_STORAGE_BUCKET_PROD = "ad-forecasting-nu-central-prod" 
 
-sql_dev = """
+#@app.route('/openFile')
+def openFile():
+    gcs = storage.Client()
+    try:
+        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
+    except:
+        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
+    blob = bucket.get_blob('environment_variables.json')
+
+    data = json.load(f)
+    return data
+
+env_variables = openFile()
+
+# import env_variables here:
+
+table_id = env_variables['GBQ_TABLE_ID'] #"ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
+
+model_id = env_variables['GBQ_ML_MODEL']
+
+sql_1 = """
 CREATE TABLE IF NOT EXISTS `{0}` 
 (
     date string,
@@ -38,38 +55,11 @@ CREATE TABLE IF NOT EXISTS `{0}`
     video_50_watched integer,
 );
 """.format(
-    table_id_dev
+    table_id
 )
 
-sql_prod = """
-CREATE TABLE IF NOT EXISTS `{0}` 
-(
-    date string,
-    clientid integer,
-    clientname string,
-    mediatype string,
-    funnel string,
-    seasongroup string,
-    spend numeric,
-    total_revenue numeric,
-    site_visits integer,
-    video_completions integer,
-    video_views integer,
-    impressions integer,
-    post_engagement integer,
-    purchases integer,
-    clicks integer,
-    video_50_watched integer,
-);
-""".format(
-    table_id_prod
-)
-
-job_dev = client.query(sql_dev)  # API request.
+job_dev = client.query(sql_1)  # API request.
 job_dev.result()  # Waits for the query to finish.
-
-job_prod = client.query(sql_prod)  # API request.
-job_prod.result()  # Waits for the query to finish.
 
 
 @app.route('/upload')
@@ -104,19 +94,6 @@ def file_uploaded() -> str:
 
     return blob.path
 
- @app.route('/openFile')
- def openFile():
-     gcs = storage.Client()
-     try:
-         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
-     except:
-         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
-     blob = bucket.get_blob('environment_variables.json')
-
-     data = json.load(f)
-     return data
-
-
 @app.errorhandler(500)
 def server_error(e: Union[Exception, int]) -> str:
     logging.exception('An error occurred during a request.')
@@ -137,20 +114,21 @@ def helloworld():
         q_sv = request.args.get('site_visits')
         q_imp = request.args.get('impressions')
 
-        sql_dev = """
-        SELECT * FROM ML.PREDICT(MODEL `ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
+        sql_pred = """
+        SELECT * FROM ML.PREDICT(MODEL {0}, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
         (SELECT 
-          CAST("{0}" AS date) AS date,
-          {1} AS client,
-          {2} AS seasongroup,
-          {3} AS funnel,
-          {4} AS mediatype, 
-          {5} AS spend,
-          {6} AS site_visits,
-          {7} AS impressions
+          CAST("{1}" AS date) AS date,
+          {2} AS client,
+          {3} AS seasongroup,
+          {4} AS funnel,
+          {5} AS mediatype, 
+          {6} AS spend,
+          {7} AS site_visits,
+          {8} AS impressions
         )
         );
         """.format(
+            model_id,
             q_date,
             q_client,
             q_sg,
@@ -162,9 +140,9 @@ def helloworld():
         )
 
 
-        predict_dev = client.query(sql_dev)  # API request.
-        data = predict_dev.result()
-        predict_df = predict_dev.to_dataframe()  # Waits for the query to finish.
+        predict_qry = client.query(sql_pred)  # API request.
+        data = predict_qry.result()
+        predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
         predict_json = predict_df.to_json()
 
         return predict_json
@@ -173,7 +151,7 @@ def helloworld():
 def update_data():    
     client = bigquery.Client()
 
-    table_id_dev = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
+    table_id_update = table_id #"ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
 
     job_config = bigquery.LoadJobConfig(
         schema=[
@@ -199,15 +177,26 @@ def update_data():
         source_format=bigquery.SourceFormat.CSV,
         write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
     )
-    uri = "gs://ad-forecasting-nu-central/raw_marketing_data.csv"
+    try:
+        uri = "gs://{0}/raw_marketing_data.csv".format(CLOUD_STORAGE_BUCKET_DEV)
 
-    load_job = client.load_table_from_uri(
-        uri, table_id_dev, job_config=job_config
-    )  # Make an API request.
+        load_job = client.load_table_from_uri(
+            uri, table_id_update, job_config=job_config
+        )  # Make an API request.
 
-    load_job.result()  # Waits for the job to complete.
+        load_job.result()  # Waits for the job to complete.
 
-    return "Success"
+        return "Success"
+    except:
+        uri = "gs://{0}/raw_marketing_data.csv".format(CLOUD_STORAGE_BUCKET_PROD)
+
+        load_job = client.load_table_from_uri(
+            uri, table_id_update, job_config=job_config
+        )  # Make an API request.
+
+        load_job.result()  # Waits for the job to complete.
+
+        return "Success"
 
   
 if __name__=='__main__':
