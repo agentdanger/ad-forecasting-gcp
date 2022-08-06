@@ -14,7 +14,8 @@ table_id_dev = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
 table_id_prod = "ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_prod"
 
 # Configure this environment variable via app.yaml
-CLOUD_STORAGE_BUCKET = "ad-forecasting-nu-central" 
+CLOUD_STORAGE_BUCKET_DEV = "ad-forecasting-nu-central" 
+CLOUD_STORAGE_BUCKET_PROD = "ad-forecasting-nu-central-prod" 
 
 sql_dev = """
 CREATE TABLE IF NOT EXISTS `{0}` 
@@ -88,7 +89,10 @@ def file_uploaded() -> str:
     gcs = storage.Client()
 
     # Get the bucket that the file will be uploaded to.
-    bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
+    try:
+        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
+    except:
+        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
 
     # Create a new blob and upload the file's content.
     blob = bucket.blob(uploaded_file.filename)
@@ -99,6 +103,17 @@ def file_uploaded() -> str:
     )
 
     return blob.path
+
+@app.route('/openFile')
+def openFile():
+    client = storage.Client()
+    try:
+        bucket = client.get_bucket({0}).format(CLOUD_STORAGE_BUCKET_PROD)
+    try:
+        bucket = client.get_bucket({0}).format(CLOUD_STORAGE_BUCKET_DEV)
+    blob = bucket.get_blob('data/movie_lines.txt')
+    your_file_contents = blob.download_as_string()
+    return your_file_contents
 
 
 @app.errorhandler(500)
