@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, render_template
 from google.cloud import bigquery, storage
 from typing import Union
 import logging
+import json
   
 app = Flask(__name__)
 
