@@ -90,9 +90,9 @@ def file_uploaded() -> str:
 
     # Get the bucket that the file will be uploaded to.
     try:
-        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
-    except:
         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
+    except:
+        bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
 
     # Create a new blob and upload the file's content.
     blob = bucket.blob(uploaded_file.filename)
