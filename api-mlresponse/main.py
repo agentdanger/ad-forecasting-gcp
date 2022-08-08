@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from google.cloud import bigquery, storage
 from typing import Union
+from datetime import datetime
 import logging
 import json
   
@@ -61,6 +62,20 @@ CREATE TABLE IF NOT EXISTS `{0}`
 
 job_dev = client.query(sql_1)  # API request.
 job_dev.result()  # Waits for the query to finish.
+
+def get_days(start_date, end_date):
+    d_string1 = start_date
+    d_string2 = end_date
+
+    date_time_obj1 = datetime.strptime(d_string1, '%Y-%m-%d')
+    date_time_obj2 = datetime.strptime(d_string2, '%Y-%m-%d')
+
+    delta = date_time_obj2-date_time_obj1
+
+    delta_days = delta.get_days
+    media_days = delta_days + 1
+
+    return delta_days, media_days
 
 
 @app.route('/upload')
