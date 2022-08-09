@@ -137,6 +137,8 @@ def helloworld():
 
         prediction = 0
 
+        json_data = {"total_prediction": [], "dates":[],"daily_prediction":[]}
+
         for day_ix in range(q_delta_days):
             pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
@@ -169,9 +171,11 @@ def helloworld():
             predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
             prediction += predict_df['predicted_total_revenue']
             
+            json_data['dates'].append(q_pred_date)
+            json_data['daily_prediction'].append(int(predict_df['predicted_total_revenue']))
 
-            
-        json_str = json.dumps({'predicted_total_revenue': int(prediction)})
+        json_data['total_prediction'] = int(prediction)  
+        json_str = json.dumps(json_data, 4)
         return json_str
 
 @app.route('/tasks/update_data', methods=['GET'])
