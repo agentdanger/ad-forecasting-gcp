@@ -175,7 +175,7 @@ def helloworld():
             json_data['daily_prediction'].append(int(predict_df['predicted_total_revenue']))
 
         json_data['total_prediction'] = int(prediction)  
-        json_str = json.dumps(json_data, 4)
+        json_str = json.dumps(json_data, indent=4)
         return json_str
 
 @app.route('/tasks/update_data', methods=['GET'])
