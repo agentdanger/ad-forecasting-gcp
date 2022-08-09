@@ -139,7 +139,7 @@ def helloworld():
 
         json_data = {"total_prediction": [], "dates":[],"daily_prediction":[]}
 
-        for day_ix in range(q_delta_days):
+        for day_ix in range(q_media_days):
             pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
 
