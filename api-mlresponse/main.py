@@ -72,8 +72,8 @@ def get_days(start_date, end_date):
 
     delta = date_time_obj2-date_time_obj1
 
-    delta_days = delta
-    media_days = delta_days + 1
+    delta_days = delta.days
+    media_days = delta.days + 1
 
     return delta_days, media_days
 
