@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from google.cloud import bigquery, storage
 from typing import Union
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import json
   
@@ -138,7 +138,7 @@ def helloworld():
         prediction = 0
 
         for day_ix in range(q_delta_days):
-            pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + datetime.timedelta(days=day_ix)
+            pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
 
             sql_pred = """
