@@ -169,7 +169,7 @@ def helloworld():
             predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
             predict_json = predict_df.to_json()
 
-            return predict_df
+            return predict_json
 
 @app.route('/tasks/update_data', methods=['GET'])
 def update_data():    
