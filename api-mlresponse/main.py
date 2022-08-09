@@ -72,7 +72,7 @@ def get_days(start_date, end_date):
 
     delta = date_time_obj2-date_time_obj1
 
-    delta_days = delta.get_days
+    delta_days = delta
     media_days = delta_days + 1
 
     return delta_days, media_days
@@ -163,7 +163,6 @@ def helloworld():
                 q_spend,
                 q_imp
             )
-
 
             predict_qry = client.query(sql_pred)  # API request.
             data = predict_qry.result()
