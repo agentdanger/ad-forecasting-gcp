@@ -146,7 +146,7 @@ def helloworld():
             sql_pred = """
             SELECT * FROM ML.PREDICT(MODEL `{0}`, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
             (SELECT 
-              CAST("{1}" AS TIMESTAMP) AS date,
+              CAST("{1}" AS DATE) AS date,
               {2} AS client,
               {3} AS seasongroup,
               {4} AS funnel,
