@@ -167,7 +167,7 @@ def helloworld():
             predict_qry = client.query(sql_pred)  # API request.
             data = predict_qry.result()
             predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
-            prediction =+ predict_df['predicted_total_revenue']
+            prediction += predict_df['predicted_total_revenue']
             
 
             
