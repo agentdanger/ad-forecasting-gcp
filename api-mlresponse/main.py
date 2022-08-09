@@ -168,9 +168,10 @@ def helloworld():
             data = predict_qry.result()
             predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
             prediction =+ predict_df['predicted_total_revenue']
-            predict_json = predict_df['predicted_total_revenue'].to_json()
+            json_str = json.dumps({'salary': int(prediction)})
+            #predict_json = predict_df['predicted_total_revenue'].to_json()
 
-            return predict_json
+            return json_str
 
 @app.route('/tasks/update_data', methods=['GET'])
 def update_data():    
