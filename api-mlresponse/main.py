@@ -121,47 +121,56 @@ def server_error(e: Union[Exception, int]) -> str:
 @app.route('/', methods=['GET'])
 def helloworld():
     if(request.method == 'GET'):
-        q_date = request.args.get('date')
+        q_start_date = request.args.get('start_date')
+        q_end_date = request.args.get('end_date')
         q_client = request.args.get('client')
         q_sg = request.args.get('seasongroup')
         q_funnel = request.args.get('funnel')
         q_mt = request.args.get('mediatype')
         q_spend = request.args.get('spend')
-        q_sv = request.args.get('site_visits')
         q_imp = request.args.get('impressions')
 
-        sql_pred = """
-        SELECT * FROM ML.PREDICT(MODEL `{0}`, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
-        (SELECT 
-          CAST("{1}" AS date) AS date,
-          {2} AS client,
-          {3} AS seasongroup,
-          {4} AS funnel,
-          {5} AS mediatype, 
-          {6} AS spend,
-          {7} AS site_visits,
-          {8} AS impressions
-        )
-        );
-        """.format(
-            model_id,
-            q_date,
-            q_client,
-            q_sg,
-            q_funnel,
-            q_mt,
-            q_spend,
-            q_sv,
-            q_imp
-        )
+        q_delta_days, q_media_days = get_days(q_start_date, q_end_date)
+
+        q_daily_imp = q_imp / q_media_days
+        q_daily_spend = q_spend / q_media_days
+
+        prediction = 0
+
+        for day_ix in range(q_delta_days):
+            pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + datetime.timedelta(days=day_ix)
+            q_pred_date = pred_date.strftime('%Y-%m-%d')
+
+            sql_pred = """
+            SELECT * FROM ML.PREDICT(MODEL `{0}`, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
+            (SELECT 
+              CAST("{1}" AS date) AS date,
+              {2} AS client,
+              {3} AS seasongroup,
+              {4} AS funnel,
+              {5} AS mediatype, 
+              {6} AS spend,
+              {7} AS impressions
+            )
+            );
+            """.format(
+                model_id,
+                q_pred_date,
+                q_client,
+                q_sg,
+                q_funnel,
+                q_mt,
+                q_spend,
+                q_imp
+            )
 
 
-        predict_qry = client.query(sql_pred)  # API request.
-        data = predict_qry.result()
-        predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
-        predict_json = predict_df.to_json()
+            predict_qry = client.query(sql_pred)  # API request.
+            data = predict_qry.result()
+            predict_df = predict_qry.to_dataframe()  # Waits for the query to finish.
+            predict_json = predict_df.to_json()
 
-        return predict_json
+            return predict_df
 
 @app.route('/tasks/update_data', methods=['GET'])
 def update_data():    
