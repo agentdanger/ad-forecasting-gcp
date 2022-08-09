@@ -176,7 +176,7 @@ def helloworld():
 
 @app.route('/tasks/update_data', methods=['GET'])
 def update_data():    
-    client = bigquery.Client()
+    client = bigquery.Client() 
 
     table_id_update = table_id #"ad-forecasting-nu.d_ad_forecasting_nu.t_ad_forecasting_data_dev"
 
