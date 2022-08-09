@@ -132,8 +132,8 @@ def helloworld():
 
         q_delta_days, q_media_days = get_days(q_start_date, q_end_date)
 
-        q_daily_imp = q_imp / q_media_days
-        q_daily_spend = q_spend / q_media_days
+        q_daily_imp = int(q_imp) / q_media_days
+        q_daily_spend = int(q_spend) / q_media_days
 
         prediction = 0
 
