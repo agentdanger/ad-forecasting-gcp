@@ -139,7 +139,10 @@ def helloworld():
 
         json_data = {"total_prediction": [], "dates":[],"daily_prediction":[]}
 
-        for day_ix in range(q_media_days):
+        loop_days = 0
+
+        for day_ix in range(7):
+            loop_days += 1
             pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
             q_day_of_week = pred_date.isoweekday()
@@ -186,7 +189,7 @@ def helloworld():
             json_data['dates'].append(q_pred_date)
             json_data['daily_prediction'].append(int(predict_df['predicted_total_revenue']))
 
-        json_data['total_prediction'] = int(prediction)  
+        json_data['total_prediction'] = int(prediction)/loop_days*media_days  
         json_str = json.dumps(json_data, indent=4)
         return json_str
 
