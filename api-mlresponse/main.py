@@ -142,22 +142,34 @@ def helloworld():
         for day_ix in range(q_media_days):
             pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
+            q_day_of_week = pred_date.isoweekday()
+            q_week_of_date = pred_date.isocalendar().week
+            q_qtr_of_date = (pred_date.month-1)//3+1
+            q_yr_of_date = pred_date.year
 
             sql_pred = """
             SELECT * FROM ML.PREDICT(MODEL `{0}`, #`ad-forecasting-nu.d_ad_forecasting_nu.sample_model`, 
             (SELECT 
-              CAST("{1}" AS date) AS date,
-              {2} AS client,
-              {3} AS seasongroup,
-              {4} AS funnel,
-              {5} AS mediatype, 
-              {6} AS spend,
-              {7} AS impressions
+              CAST("{1}" AS DATE) AS date,
+              {2} AS day_of_week,
+              {3} AS week_of_date,
+              {4} AS quarter_of_date, 
+              {5} AS year_of_date, 
+              {6} AS client,
+              {7} AS seasongroup,
+              {8} AS funnel,
+              {9} AS mediatype, 
+              {10} AS spend,
+              {11} AS impressions
             )
             );
             """.format(
                 model_id,
                 q_pred_date,
+                q_day_of_week,
+                q_week_of_date,
+                q_qtr_of_date,
+                q_yr_of_date,
                 q_client,
                 q_sg,
                 q_funnel,
