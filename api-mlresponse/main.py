@@ -174,8 +174,8 @@ def helloworld():
                 q_sg,
                 q_funnel,
                 q_mt,
-                q_spend,
-                q_imp
+                q_daily_spend,
+                q_daily_imp
             )
 
             predict_qry = client.query(sql_pred)  # API request.
