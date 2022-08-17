@@ -189,7 +189,7 @@ def helloworld():
             json_data['dates'].append(q_pred_date)
             json_data['daily_prediction'].append(int(predict_df['predicted_total_revenue']))
 
-        json_data['total_prediction'] = int(prediction)/loop_days*media_days  
+        json_data['total_prediction'] = int(prediction)/loop_days*q_media_days  
         json_str = json.dumps(json_data, indent=4)
         return json_str
 
