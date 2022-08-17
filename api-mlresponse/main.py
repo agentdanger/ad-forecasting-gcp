@@ -132,14 +132,17 @@ def helloworld():
 
         q_delta_days, q_media_days = get_days(q_start_date, q_end_date)
 
-        q_daily_imp = int(q_imp) / q_media_days
-        q_daily_spend = int(q_spend) / q_media_days
+        q_daily_imp = int(int(q_imp) / q_media_days)
+        q_daily_spend = int(int(q_spend) / q_media_days)
 
         prediction = 0
 
         json_data = {"total_prediction": [], "dates":[],"daily_prediction":[]}
 
-        for day_ix in range(q_media_days):
+        loop_days = 0
+
+        for day_ix in range(7):
+            loop_days += 1
             pred_date = datetime.strptime(q_start_date, '%Y-%m-%d') + timedelta(days=day_ix)
             q_pred_date = pred_date.strftime('%Y-%m-%d')
             q_day_of_week = pred_date.isoweekday()
@@ -174,8 +177,8 @@ def helloworld():
                 q_sg,
                 q_funnel,
                 q_mt,
-                q_spend,
-                q_imp
+                q_daily_spend,
+                q_daily_imp
             )
 
             predict_qry = client.query(sql_pred)  # API request.
@@ -186,7 +189,7 @@ def helloworld():
             json_data['dates'].append(q_pred_date)
             json_data['daily_prediction'].append(int(predict_df['predicted_total_revenue']))
 
-        json_data['total_prediction'] = int(prediction)  
+        json_data['total_prediction'] = int(prediction)/loop_days*q_media_days  
         json_str = json.dumps(json_data, indent=4)
         return json_str
 
