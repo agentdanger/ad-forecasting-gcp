@@ -210,7 +210,7 @@ def update_data():
             bigquery.SchemaField("spend", "numeric"),
             bigquery.SchemaField("total_revenue", "numeric"),
             bigquery.SchemaField("site_visits", "integer"),
-            bigquery.SchemaField("video_completions", "integer"),
+            bigquery.SchemaField("video_completions", "numeric"),
             bigquery.SchemaField("video_views", "integer"),
             bigquery.SchemaField("impressions", "integer"),
             bigquery.SchemaField("post_engagement", "integer"),
