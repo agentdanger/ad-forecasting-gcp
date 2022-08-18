@@ -216,7 +216,7 @@ def update_data():
             bigquery.SchemaField("post_engagement", "integer"),
             bigquery.SchemaField("purchases", "integer"),
             bigquery.SchemaField("clicks", "integer"),
-            bigquery.SchemaField("video_50_watched", "integer")
+            bigquery.SchemaField("video_50_watched", "numeric")
         ],
         skip_leading_rows=1,
         # The source format defaults to CSV, so the line below is optional.
