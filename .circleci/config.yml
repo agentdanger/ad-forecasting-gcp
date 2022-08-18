@@ -58,6 +58,7 @@ jobs:
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
             cd api-mlresponse && gcloud app deploy
+            gcloud app deploy cron.yaml
 
   build_prod:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -112,6 +113,7 @@ jobs:
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID_PROD}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
             cd api-mlresponse && gcloud app deploy
+            gcloud app deploy cron.yaml
 
 
 
