@@ -76,7 +76,9 @@ The spend and the forecasted revenue for the period can be used to calculate an 
 
 ROAS Calculation:
 
- $$ ROAS = {total predicted revenue \over total ad spend} $$
+ $$ ROAS = {revenue \over spend} $$
+
+ Where revenue is total_prediction from the forecast API and spend is the spend input in the GET request.  We leave this calculation to the analyst in case they want to use it for further downstream calculations, forecasting, or analyses.
 
 ## Using the CSV Uploader
 
