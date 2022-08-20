@@ -74,3 +74,14 @@ https://ad-forecasting-nu-prod.uc.r.appspot.com/upload
 
 The forecasting application does include the ability to update the data that the model will train off of.  At this time, the CSV uploader is disconnected from the ML algorithm to ensure the API functionality.  If an update to the model is requested, we can turn this service back on.  When turned on, the CSV uploader will check for a CSV file and store that in Google Cloud Storage to be processed by the model using a cron job set for 24 hour refreshes.
 
+## Application Architecture
+
+![Application Architecture](https://github.com/agentdanger/ad-forecasting-gcp/blob/4fa5dc15df8e7b26703e2f5fa7d1465ab7a4e914/documentation/Application_diagram.png)
+
+### Technologies Used:
+
+- <b>Google Cloud Storage</b>: Our blob storage handles files (i.e. CSVs) uploaded via the CSV uploader and available for further processing.
+- <b>Google Cloud Scheduler</b>: Every 24 hours (when activated), the Cloud Scheduler processes the CSVs and stores the results in a BigQuery table.
+- <b>Google Big Query</b>: This acts as the database used by our application, storing data available for our machine learning model.
+- <b>Google Big Query ML</b>: This is the model, build leveraging Big Query ML, which performs a random forest regression to forecast revenue.
+- <b>Google App Engine</b>: The application that performs actions for users via an API Get Request, or the CSV uploading services.
