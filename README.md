@@ -74,3 +74,6 @@ https://ad-forecasting-nu-prod.uc.r.appspot.com/upload
 
 The forecasting application does include the ability to update the data that the model will train off of.  At this time, the CSV uploader is disconnected from the ML algorithm to ensure the API functionality.  If an update to the model is requested, we can turn this service back on.  When turned on, the CSV uploader will check for a CSV file and store that in Google Cloud Storage to be processed by the model using a cron job set for 24 hour refreshes.
 
+## Application Architecture
+
+![Application Architecture](/documentation/application_diagram.png)
