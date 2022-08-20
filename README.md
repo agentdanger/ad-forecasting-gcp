@@ -18,13 +18,13 @@ All communication with the API is done through a GET request via https at the ba
 
 You must include as part of a GET request the following fields set as query strings along with the base URL. The fields that the API takes are listed here:
 
-- start_date:  (YYYY-MM-DD) the first day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
-- end_date: (YYYY-MM-DD) the last day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
-- client:  (int) the client id representing the client associated with the campaign to be forecasted.
-- seasongroup: <i>str</i> (e.g. "haunt") the season associated with the campaign to be forecasted.
+- <b>start_date:</b>  (YYYY-MM-DD) the first day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
+- <b>end_date:</b> (YYYY-MM-DD) the last day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
+- <b>client:  (int) the client id representing the client associated with the campaign to be forecasted.
+- <b>seasongroup:</b> <i>str</i> (e.g. "haunt") the season associated with the campaign to be forecasted.
     seasongroup can be one of the following:
     - "conversion"
-- funnel:  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
+- <b>funnel:</b>  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
     funnel can be one of the following:
     - "Full Year"
     - "Group Sales"
@@ -32,7 +32,7 @@ You must include as part of a GET request the following fields set as query stri
     - "Resorts"
     - "Season Pass Experience"
     - "Tourism"
-- mediatype: <i>str</i> (e.g. "Facebook") the media associated with the campaign to be forecasted.
+- <b>mediatype:</b> <i>str</i> (e.g. "Facebook") the media associated with the campaign to be forecasted.
     Media types can only be one of the following:
     - "Audio"
     - "Display_Desck"
@@ -46,8 +46,8 @@ You must include as part of a GET request the following fields set as query stri
     - "Video_FEP"
     - "Video_Preroll_Desck"
     - "Video_Preroll_Direct"
-- spend <i>int</i> the amount of planned spend associated with the campaign to be forecasted.  Note:  This should be the total spend for the length of the campaign.
-- impressions <i>int</i> the amount of planned impressions associated with the campaign to be forecasted.  This should be the total number of planned impressions for the length of the campaign.
+- <b>spend:</b> <i>int</i> the amount of planned spend associated with the campaign to be forecasted.  Note:  This should be the total spend for the length of the campaign.
+- <b>impressions:</b> <i>int</i> the amount of planned impressions associated with the campaign to be forecasted.  This should be the total number of planned impressions for the length of the campaign.
 
 ### Example API Get Request:
 
@@ -64,9 +64,21 @@ With a correclty formatted GET request, you will receive a JSON response with th
 	"daily_prediction": [ 6948, 4835, 4835, 4835, 4835, 4835, 6948 ] 
 }
 ```
-- total_prediction:  <i>numeric</i> This is the total forecasted revenue for the length of the campaign.
-- dates: <i>str</i> This is a list of the first seven days associated with the campaign.
-- daily_prediction: <i>int</i> This is a list of the daily forecasted revenue associated with first seven days of the campaign.
+- <b>total_prediction:</b>  <i>numeric</i> This is the total forecasted revenue for the length of the campaign.
+- <b>dates:</b> <i>str</i> This is a list of the first seven days associated with the campaign.
+- <b>daily_prediction:</b> <i>int</i> This is a list of the daily forecasted revenue associated with first seven days of the campaign.
+
+### Example Data Visualization:
+
+![Example_data_viz](https://github.com/agentdanger/ad-forecasting-gcp/blob/23dfab9fa157b932576354757f96d863f0cbb698/documentation/example_data_viz.png)
+
+The spend and the forecasted revenue for the period can be used to calculate an important benchmark for the upcoming campaign, the Return on Ad Spend (ROAS.)  This metric is calculated by dividing total predicted revenue by the ad spend.
+
+ROAS Calculation:
+
+ $$ ROAS = {revenue \over spend} $$
+
+ Where revenue is total_prediction from the forecast API and spend is the spend input in the GET request.  We leave this calculation to the analyst in case they want to use it for further downstream calculations, forecasting, or analyses.
 
 ## Using the CSV Uploader
 
