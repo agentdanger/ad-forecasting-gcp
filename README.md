@@ -80,8 +80,8 @@ The forecasting application does include the ability to update the data that the
 
 ### Technologies Used:
 
-- Google Cloud Storage: Our blob storage handles files (i.e. CSVs) uploaded via the CSV uploader and available for further processing.
-- Google Cloud Scheduler: Every 24 hours (when activated), the Cloud Scheduler processes the CSVs and stores the results in a BigQuery table.
-- Google Big Query: This acts as the database used by our application, storing data available for our machine learning model.
-- Google Big Query ML: This is the model, build leveraging Big Query ML, which performs a random forest regression to forecast revenue.
-- Google App Engine: The application that performs actions for users via an API Get Request, or the CSV uploading services.
+- <b>Google Cloud Storage</b>: Our blob storage handles files (i.e. CSVs) uploaded via the CSV uploader and available for further processing.
+- <b>Google Cloud Scheduler</b>: Every 24 hours (when activated), the Cloud Scheduler processes the CSVs and stores the results in a BigQuery table.
+- <b>Google Big Query</b>: This acts as the database used by our application, storing data available for our machine learning model.
+- <b>Google Big Query ML</b>: This is the model, build leveraging Big Query ML, which performs a random forest regression to forecast revenue.
+- <b>Google App Engine</b>: The application that performs actions for users via an API Get Request, or the CSV uploading services.
