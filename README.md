@@ -68,6 +68,10 @@ With a correclty formatted GET request, you will receive a JSON response with th
 - dates: <i>str</i> This is a list of the first seven days associated with the campaign.
 - daily_prediction: <i>int</i> This is a list of the daily forecasted revenue associated with first seven days of the campaign.
 
+### Example Data Visualization:
+
+
+
 ## Using the CSV Uploader
 
 https://ad-forecasting-nu-prod.uc.r.appspot.com/upload
