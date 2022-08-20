@@ -3,10 +3,10 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/agentdanger/ad-forecasting-gcp/tree/main.svg?style=svg&circle-token=88a4a43346f2808df6c5f1508b8b07a7174ff7dd)](https://dl.circleci.com/status-badge/redirect/gh/agentdanger/ad-forecasting-gcp/tree/main)
 
 ## Application Overview
-This application is a Python Flask API that leverages machine learning and the Google Cloud Platform to forecast revenue attributed to an upcoming media plan for a select clients of an advertising agency. These forecasts are useful to set benchmarks for upcoming media plans so the media planner can set expectations of performance with clients and assist in optimizations.
+This application is a Python Flask API that leverages machine learning and the Google Cloud Platform to forecast revenue attributed to an upcoming media plan for select clients of an advertising agency. These forecasts are useful to set benchmarks for upcoming media plans so the media planner can set expectations of performance with clients and assist in setting a baseline for their optimization strategy.
 
 ## Using the API
-To use the API, an analyst can send a GET request to the applications along with a series of query strings.  Based on the inputs in the query strings, the forecasting algorithm will provide an appropriate total revenue you can expect over the life of the campaign as well as a daily forcast for the first 7 days of the media activation.
+To use the API, an analyst can send a GET request to the application along with a series of query strings. Based on the input in the query string, the forecasting algorithm will provide an appropriate total revenue you can expect over the life of the planned ad campaign as well as a daily forecast for the first 7 days of the media activation.
 
 Base URL:  https://ad-forecasting-nu-prod.uc.r.appspot.com/
 
@@ -23,15 +23,15 @@ You must include as part of a GET request the following fields set as query stri
 - <b>client:  (int) the client id representing the client associated with the campaign to be forecasted.
 - <b>seasongroup:</b> <i>str</i> (e.g. "haunt") the season associated with the campaign to be forecasted.
     seasongroup can be one of the following:
-    - "conversion"
-- <b>funnel:</b>  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
-    funnel can be one of the following:
     - "Full Year"
     - "Group Sales"
     - "Haunt"
     - "Resorts"
     - "Season Pass Experience"
     - "Tourism"
+- <b>funnel:</b>  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
+    funnel can be one of the following:
+    - "conversion"
 - <b>mediatype:</b> <i>str</i> (e.g. "Facebook") the media associated with the campaign to be forecasted.
     Media types can only be one of the following:
     - "Audio"
