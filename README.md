@@ -76,4 +76,4 @@ The forecasting application does include the ability to update the data that the
 
 ## Application Architecture
 
-![Application Architecture](/documentation/application_diagram.png)
+![Application Architecture](https://github.com/agentdanger/ad-forecasting-gcp/blob/4fa5dc15df8e7b26703e2f5fa7d1465ab7a4e914/documentation/Application_diagram.png)
