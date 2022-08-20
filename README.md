@@ -70,7 +70,13 @@ With a correclty formatted GET request, you will receive a JSON response with th
 
 ### Example Data Visualization:
 
+![Example_data_viz](https://github.com/agentdanger/ad-forecasting-gcp/blob/23dfab9fa157b932576354757f96d863f0cbb698/documentation/example_data_viz.png)
 
+The spend and the forecasted revenue for the period can be used to calculate an important benchmark for the upcoming campaign, the Return on Ad Spend (ROAS.)  This metric is calculated by dividing total predicted revenue by the ad spend.
+
+ROAS Calculation:
+
+ $$ ROAS = total_predicted_revenue \over total_ad_spend} $$
 
 ## Using the CSV Uploader
 
