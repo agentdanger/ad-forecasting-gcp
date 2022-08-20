@@ -1,4 +1,1 @@
 cron:
-- description: "daily data update"
-  url: /tasks/update_data
-  schedule: every 24 hours 
