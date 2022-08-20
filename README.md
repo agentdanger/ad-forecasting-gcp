@@ -64,9 +64,9 @@ With a correclty formatted GET request, you will receive a JSON response with th
 	"daily_prediction": [ 6948, 4835, 4835, 4835, 4835, 4835, 6948 ] 
 }
 ```
-- total_prediction:  <i>numeric</i> This is the total forecasted revenue for the length of the campaign.
-- dates: <i>str</i> This is a list of the first seven days associated with the campaign.
-- daily_prediction: <i>int</i> This is a list of the daily forecasted revenue associated with first seven days of the campaign.
+- <b>total_prediction:</b>  <i>numeric</i> This is the total forecasted revenue for the length of the campaign.
+- <b>dates:</b> <i>str</i> This is a list of the first seven days associated with the campaign.
+- <b>daily_prediction:</b> <i>int</i> This is a list of the daily forecasted revenue associated with first seven days of the campaign.
 
 ### Example Data Visualization:
 
