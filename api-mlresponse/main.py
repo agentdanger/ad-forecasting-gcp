@@ -23,7 +23,7 @@ def openFile():
         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_PROD)
     except:
         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET_DEV)
-    blob = bucket.get_blob('environment_variables.json')
+    blob = bucket.get_blob('environment_variables.json') 
 
     data = json.loads(blob.download_as_string())
     return data
