@@ -18,13 +18,13 @@ All communication with the API is done through a GET request via https at the ba
 
 You must include as part of a GET request the following fields set as query strings along with the base URL. The fields that the API takes are listed here:
 
-- start_date:  (YYYY-MM-DD) the first day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
-- end_date: (YYYY-MM-DD) the last day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
-- client:  (int) the client id representing the client associated with the campaign to be forecasted.
-- seasongroup: <i>str</i> (e.g. "haunt") the season associated with the campaign to be forecasted.
+- <b>start_date:</b>  (YYYY-MM-DD) the first day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
+- <b>end_date:</b> (YYYY-MM-DD) the last day of the campaign to be forecasted.  Must be entered YYYY-MM-DD with no quotes.
+- <b>client:  (int) the client id representing the client associated with the campaign to be forecasted.
+- <b>seasongroup:</b> <i>str</i> (e.g. "haunt") the season associated with the campaign to be forecasted.
     seasongroup can be one of the following:
     - "conversion"
-- funnel:  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
+- <b>funnel:</b>  <i>str</i> (e.g. "conversion") the funnel associated with the campaign to be forecasted.  Only "conversion" is relevant at this time.
     funnel can be one of the following:
     - "Full Year"
     - "Group Sales"
@@ -32,7 +32,7 @@ You must include as part of a GET request the following fields set as query stri
     - "Resorts"
     - "Season Pass Experience"
     - "Tourism"
-- mediatype: <i>str</i> (e.g. "Facebook") the media associated with the campaign to be forecasted.
+- <b>mediatype:</b> <i>str</i> (e.g. "Facebook") the media associated with the campaign to be forecasted.
     Media types can only be one of the following:
     - "Audio"
     - "Display_Desck"
@@ -46,8 +46,8 @@ You must include as part of a GET request the following fields set as query stri
     - "Video_FEP"
     - "Video_Preroll_Desck"
     - "Video_Preroll_Direct"
-- spend <i>int</i> the amount of planned spend associated with the campaign to be forecasted.  Note:  This should be the total spend for the length of the campaign.
-- impressions <i>int</i> the amount of planned impressions associated with the campaign to be forecasted.  This should be the total number of planned impressions for the length of the campaign.
+- <b>spend:</b> <i>int</i> the amount of planned spend associated with the campaign to be forecasted.  Note:  This should be the total spend for the length of the campaign.
+- <b>impressions:</b> <i>int</i> the amount of planned impressions associated with the campaign to be forecasted.  This should be the total number of planned impressions for the length of the campaign.
 
 ### Example API Get Request:
 
