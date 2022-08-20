@@ -77,3 +77,11 @@ The forecasting application does include the ability to update the data that the
 ## Application Architecture
 
 ![Application Architecture](https://github.com/agentdanger/ad-forecasting-gcp/blob/4fa5dc15df8e7b26703e2f5fa7d1465ab7a4e914/documentation/Application_diagram.png)
+
+### Technologies Used:
+
+- Google Cloud Storage: Our blob storage handles files (i.e. CSVs) uploaded via the CSV uploader and available for further processing.
+- Google Cloud Scheduler: Every 24 hours (when activated), the Cloud Scheduler processes the CSVs and stores the results in a BigQuery table.
+- Google Big Query: This acts as the database used by our application, storing data available for our machine learning model.
+- Google Big Query ML: This is the model, build leveraging Big Query ML, which performs a random forest regression to forecast revenue.
+- Google App Engine: The application that performs actions for users via an API Get Request, or the CSV uploading services.
